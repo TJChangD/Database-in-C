@@ -1,0 +1,9 @@
+Write a program to manage the grades of students in a class. To represent the information of each student define a structure type named 
+student. 
+The members of this structure should be: 
+
+1. an integer that represents the student’s ID number, 
+2. an array of 20 characters storing the name, 
+3. an integer that represents the project grade, 
+4. an integer that represents the final exam grade, 
+5. a floating point representing the final course mark. 
