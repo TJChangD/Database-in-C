@@ -1,0 +1,205 @@
+/*
+ * File:   main.c
+ * Author: Darren
+ *
+ * Created on November 11, 2015, 2:12 PM
+ */
+#include <stdio.h>
+#include <stdlib.h>
+/*
+ *
+ */
+typedef struct{ //defines the structure
+    int ID;
+    char studentname[20];
+    int proj;
+    int exam;
+    float final;
+}student;
+ 
+student **create_class_list(char *filename, int *sizePtr);//function prototypes
+int find_linsrch(int idNo, student **list, int size);
+int find_binsrch(int idNo,student **list, int size);
+void input_grades(char *filename,student **list, int size);
+void compute_final_course_marks(student **list, int size);
+void output_final_course_mark(char *filename,student **list, int size);
+void print_backwards(student **list, int size);
+void withdraw(int idNo, student **list, int *sizePtr);
+void output_binary(student **list,int size, const char* fname);
+void check_binary(student **list,int size, const char* fname);
+void destroy_list(student** list, int *sizePtr);
+ 
+int main(int argc, char** argv) {
+    int size;
+    char *infile = "classlist.txt";//input and output text files
+    char *gradefile = "grades.txt";
+    char *outfile = "outgrades.txt";
+    const char* binaryfile = "outbinary.bin";
+    student **class_list = create_class_list(infile,&size);
+    printf("---Searches---\n");
+    printf("Linear Search-> %d\n",find_linsrch(1406398,class_list,size));//call functions
+    find_binsrch(1000,class_list,size);
+    input_grades(gradefile,class_list,size);
+    compute_final_course_marks(class_list,size);
+    output_final_course_mark(outfile,class_list,size);
+    printf("---Print Backwards--- \n");
+    print_backwards(class_list,size);
+    withdraw(1406398,class_list,&size);
+    output_binary(class_list,size,binaryfile);
+    check_binary(class_list,size,binaryfile);
+    destroy_list(class_list,&size);
+    return (EXIT_SUCCESS);
+}
+student **create_class_list(char *filename, int *sizePtr){ //create the class list
+    int i, numID;
+    FILE *infile = fopen(filename,"r");
+    fscanf(infile,"%d",sizePtr);
+   
+    student **class_list = (student**)calloc(*sizePtr,sizeof(student*));
+    for (i=0;i<*sizePtr;i++){
+        class_list[i]=(student*)calloc(*sizePtr,sizeof(student));
+        fscanf(infile,"%d",&numID);
+        class_list[i]->ID=numID;
+        fscanf(infile,"%[^\n]s",class_list[i]->studentname);
+    }
+    printf("---Class List---\n");
+    for(i=0;i<*sizePtr;i++){
+        printf("%d\n%s\n",class_list[i]->ID,class_list[i]->studentname);
+    }
+    fclose(infile);
+    return class_list;
+}
+ 
+int find_linsrch(int idNo, student **list, int size){ //linear search
+    int i;
+    for (i=0;i<size;i++){
+        if (list[i]->ID == idNo){
+            return i;
+        }
+    }
+    return -1;
+}
+ 
+int find_binsrch(int idNo,student **list, int size){ //binary search
+    int middle, low, high;
+    low = 0;
+    high = size-1;
+    while(low<=high){
+        middle = (low+high)/2;
+        //printf("Probed Index: %d\n",middle);
+        if(idNo == list[middle]->ID){
+            printf("Binary Search-> %d\n",middle);
+            return middle;
+        }
+        if (idNo < list[middle]->ID){
+            high = middle - 1;
+        }
+        else{
+            low = middle + 1;
+        }
+    }
+    printf("Binary Search-> -1\n");
+    return -1;
+}
+ 
+void input_grades(char *filename,student **list, int size){ //inputs the grades
+    int i,j,idNo;
+    FILE *infile = fopen(filename,"r");
+    for (i=0;i<size;i++){
+        fscanf(infile,"%d", &idNo);
+        j = find_linsrch(idNo, list, size);
+        fscanf(infile,"%d", &list[j] ->proj);
+        fscanf(infile,"%d", &list[j] ->exam);
+    }
+    printf("---Input Grades--- \n");
+    for (i=0;i<size;i++){
+        printf("%d\t%d\t%d\n", list[i] -> ID, list[i] -> proj, list[i] -> exam);
+    }
+    fclose(infile);
+}
+
+void compute_final_course_marks(student **list, int size){ //computes the final course marks
+    int i;
+    for (i=0;i<size;i++){
+        list[i]->final = ((float)list[i]->exam*0.6) + ((float)list[i]->proj*0.4);
+    }
+    printf("---Final Course Marks--- \n");
+    for (i=0;i<size;i++){
+        printf("%d\t%0.2f\n", list[i] -> ID, list[i] ->final);
+    }
+}
+
+void output_final_course_mark(char *filename,student **list, int size){ //print to text file the id and final marks
+    int i;
+    FILE *outfile=fopen(filename,"w");
+    fprintf(outfile,"%d\r\n",size);
+    for (i=0;i<size;i++){
+        fprintf(outfile, "%d\t%0.2lf\r\n",list[i]->ID, list[i]->final);
+    }
+    fclose(outfile);
+}
+
+void print_backwards(student **list, int size){ //reverse the order of student numbers
+    if(size!=0){
+        printf("%d\n",list[size-1]->ID);
+        print_backwards(list,size-1);
+    }
+}
+
+void withdraw(int idNo, student **list, int *sizePtr) { //takes a student out of the class
+    printf("---Withdraw Student--- \n");
+    int i;
+    i = find_linsrch(idNo,list,*sizePtr);
+    if (i == -1){
+        printf("ID not in list!\n");
+    }
+    if (i != -1){
+        free(list[i]);
+        while(i<*sizePtr-1){
+            list[i] = list[i+1];
+            i++;
+        }
+        list[*sizePtr-1]=NULL;
+        *sizePtr = *sizePtr - 1;
+    }
+     for(i=0;i<*sizePtr;i++){
+        printf("%d\n%s\n",list[i]->ID,list[i]->studentname);
+    }
+}
+
+void output_binary(student **list,int size, const char* fname){ //writes the list in a binary file
+    int i;
+    FILE *outfile = fopen(fname, "wb");
+    fwrite(&size, sizeof(int),1,outfile);
+    for (i=0;i<size;i++){
+       fwrite(list[i],sizeof(student),1,outfile);
+    }
+    fclose(outfile);
+}
+
+void check_binary(student **list,int size, const char* fname){ //reads the binary file 
+    printf("---Binary Check--- \n");
+    int i;
+    FILE *infile = fopen(fname,"rb");
+    fread(&size,sizeof(int),1,infile);
+    printf("%d\n",size);
+    for (i=0;i<size;i++){
+        fread(list[i],sizeof(student),1,infile);
+            printf("%d\n%s\n",list[i]->ID,list[i]->studentname);
+        }
+}
+
+void destroy_list(student** list, int *sizePtr){ //destroy the list 
+    int i;
+    for(i=0;i<*sizePtr;i++){
+        free(list[i]);
+    }
+    free(list);
+    *sizePtr = 0;
+    for (i = 0; i <*sizePtr; i++){
+        printf("%d\t%s\t%d\t%d\t%d\n", list[i] -> ID, list[i] -> studentname, list[i] -> proj, list[i] -> exam, list[i] -> final);
+    }
+    printf("Memory has been deallocated!\n");
+}
+
+        
