@@ -1,0 +1,148 @@
+---Class List---
+1879
+ Issac Newton
+1643
+ Albert Einstein
+1856
+ Nikola Tesla
+1564
+ Galileo Galilei
+1867
+ Marie Curie
+1809
+ Charles Darwin
+1822
+ Louis Pasteur
+1791
+ Michael Faraday
+1858
+ Max Planck
+1847
+ Thomas Edison
+1916
+ Francis Crick
+1823
+ Gregor Mendel
+1885
+ Niels Bohr
+1743
+ Antoine Lavoisier
+1627
+ Robert Boyle
+---Searches---
+Linear Search-> -1
+Binary Search-> -1
+---Input Grades---
+1879    78      96
+1643    79      94
+1856    49      42
+1564    86      36
+1867    75      76
+1809    95      46
+1822    46      98
+1791    85      34
+1858    78      54
+1847    24      86
+1916    95      64
+1823    54      48
+1885    86      45
+1743    97      67
+1627    67      56
+---Final Course Marks---
+1879    88.80
+1643    88.00
+1856    44.80
+1564    56.00
+1867    75.60
+1809    65.60
+1822    77.20
+1791    54.40
+1858    63.60
+1847    61.20
+1916    76.40
+1823    50.40
+1885    61.40
+1743    79.00
+1627    60.40
+---Print Backwards---
+1627
+1743
+1885
+1823
+1916
+1847
+1858
+1791
+1822
+1809
+1867
+1564
+1856
+1643
+1879
+---Withdraw Student---
+ID not in list!
+1879
+ Issac Newton
+1643
+ Albert Einstein
+1856
+ Nikola Tesla
+1564
+ Galileo Galilei
+1867
+ Marie Curie
+1809
+ Charles Darwin
+1822
+ Louis Pasteur
+1791
+ Michael Faraday
+1858
+ Max Planck
+1847
+ Thomas Edison
+1916
+ Francis Crick
+1823
+ Gregor Mendel
+1885
+ Niels Bohr
+1743
+ Antoine Lavoisier
+1627
+ Robert Boyle
+---Binary Check---
+15
+1879
+ Issac Newton
+1643
+ Albert Einstein
+1856
+ Nikola Tesla
+1564
+ Galileo Galilei
+1867
+ Marie Curie
+1809
+ Charles Darwin
+1822
+ Louis Pasteur
+1791
+ Michael Faraday
+1858
+ Max Planck
+1847
+ Thomas Edison
+1916
+ Francis Crick
+1823
+ Gregor Mendel
+1885
+ Niels Bohr
+1743
+ Antoine Lavoisier
+1627
+ Robert Boyle
+Memory has been deallocated!
+Press [Enter] to close the terminal ...

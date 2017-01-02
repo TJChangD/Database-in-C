@@ -1,0 +1,16 @@
+15
+1879 Issac Newton
+1643 Albert Einstein
+1856 Nikola Tesla
+1564 Galileo Galilei
+1867 Marie Curie
+1809 Charles Darwin
+1822 Louis Pasteur
+1791 Michael Faraday
+1858 Max Planck
+1847 Thomas Edison
+1916 Francis Crick
+1823 Gregor Mendel
+1885 Niels Bohr
+1743 Antoine Lavoisier
+1627 Robert Boyle
